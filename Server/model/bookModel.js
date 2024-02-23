@@ -15,6 +15,10 @@ const bookSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    ISBN:{
+      type:String,
+      required:true,
+    },
     book_genre:{
         type:String,
         required:true,
@@ -37,6 +41,10 @@ const bookSchema = new mongoose.Schema({
     unique:true,
     enum:[1,2,3,4,5],
     default:1,
+  },
+  adminId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Tbl_admin",
   },
   is_deleted: {
     type: Boolean,

@@ -1,21 +1,25 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const librarianToken = function (id, boolean) {
-    this.shopAdmin = boolean;
+    this.libraryAdmin = boolean;
     this.id = id;
   };
 
 
   const generateLibrarianToken = function (id, boolean) {
     const adminTokenObject = new librarianToken(id, boolean);
-    return jwt.sign({ adminTokenObject }, process.env.SECERT_STRING, {
+  const secretKey = process.env.SECRET_STRING || 'fallback-secret';
+
+    return jwt.sign({ adminTokenObject }, secretKey, {
       expiresIn: process.env.EXPIRE_DAYS,
     });
   };
 
 
 const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.SECERT_STRING, {
+  const secretKey = process.env.SECRET_STRING || 'fallback-secret';
+    return jwt.sign({ id }, secretKey, {
       expiresIn: process.env.EXPIRE_DAYS,
     });
   };
@@ -25,24 +29,16 @@ const generateToken = (id) => {
 
 const sendUserToken = async (user, statusCode, res, message) => {
     const token = generateToken(user._id);
-    const options = {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-    };
-  
-    if (process.env.NODE_ENV === "production") {
-      options.secure = true;
-    }
-  
+     console.log(user,"user")
 
   
     res.status(statusCode).json({ status: true, token, data: { user }, message });
   };
 
-  const adminToken = async (user, statusCode, res) => {
+  const adminToken = async (user, statusCode, res,message) => {
     const token = generateLibrarianToken(user._id, true);
   
-    res.status(statusCode).json({ status: "success", token, data: { user } });
+    res.status(statusCode).json({ status: "success", token, data: { user },message });
   };
 
   module.exports={sendUserToken,adminToken}
