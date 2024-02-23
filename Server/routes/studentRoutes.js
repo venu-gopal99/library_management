@@ -11,3 +11,4 @@ router.route("/createuser").post(createStudent);
 router.route("/loginuser").post(login);
 router.route("/getall").get(authenticateUser,restrict("librarian"),getAllStudent)
 
+module.exports = router;
