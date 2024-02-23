@@ -32,6 +32,7 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ["returned", "not returned"],
+        default:"not returned",
     },
     book_count:{
         type:String,

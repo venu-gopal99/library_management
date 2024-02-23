@@ -8,7 +8,7 @@ const {
     createBook,getAllBooks,deleteBook,updateBook 
 } = new BookController();
 
-router.route("/createbook").post(authenticateUser,restrict("librarian"), uploadPhoto.single("images"),createBook);
+router.route("/createbook").post(authenticateUser, uploadPhoto.single("images"),createBook);
 router.route("/getall").get(getAllBooks);
 router.route("/updatebook/:id").patch(authenticateUser,restrict("librarian"),updateBook);
 router.route("/deletebook/:id").delete(authenticateUser,restrict("librarian",deleteBook));

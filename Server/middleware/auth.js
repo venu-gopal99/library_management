@@ -20,7 +20,7 @@ const authenticateUser = async(req,res,next)=>{
         token,
         secretKey
       );
-      console.log(decodedToken.adminTokenObject,"token")
+      // console.log(decodedToken.adminTokenObject,"token")
       let user;
        if(decodedToken.adminTokenObject){
           user = await adminModel.findById(decodedToken.adminTokenObject.id)
