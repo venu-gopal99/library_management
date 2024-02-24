@@ -14,9 +14,9 @@ class orderContoller {
             const previousOne = await orderModel.find({ student_id: id, status: "not returned" });
             if ((parseInt(previousOne[0]?.book_count) + parseInt(previousOne[1]?.book_count)) >= 2 || parseInt(previousOne[0]?.book_count) + parseInt(book_count) > 2) {
                 return res.status(400).json({ message: "You can only take two books." });
-
+                
             } else if (previousOne.length >= 2) {
-                return res.status(400).json({ message: "Please return the previously borrowed books before ordering new ones." });
+                return res.status(400).json({ message: "Please return the previously taken books before ordering new ones." });
             }
 
             const count = await orderModel.findOne({ student_id: id })
@@ -27,7 +27,10 @@ class orderContoller {
 
 
             const finalBookCount = book_count !== undefined ? book_count : calculatedBookCount;
-
+       
+            if(previousOne.book_count > finalBookCount){
+                return res.status(400).json({message:"please return the previous taken books"})
+            }
 
             const book = await bookModel.findById(book_id);
             if (!book) {
@@ -80,7 +83,7 @@ class orderContoller {
             if (!order) {
                 return res.status(404).json({ message: "Order not found." });
             }
-            //  console.log(order,"wvwdvwvwdvwvdsdv")
+            //  console.log(order.book_count,"wvwdvwvwdvwvdsdv")
             // Update the order data
             order.returned_date = returned_date;
             order.status = "returned";
@@ -89,7 +92,7 @@ class orderContoller {
             if (returndate > order.due_date) {
                 // console.log(returned_date, order.due_date, "coming...")
                 const diffTime = Math.abs(returndate - order.due_date);
-                console.log(diffTime, "time");
+                // console.log(diffTime, "time");
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 const fineAmount = diffDays * 2;
                 order.fine_amount = fineAmount;
@@ -97,17 +100,21 @@ class orderContoller {
 
             const updatedOrder = await order.save();
 
-
-            if (book_count && book_count !== order.book_count) {
+            //    console.log(book_count && book_count !== order.book_count,"quantity")
+        
                 const book = await bookModel.findById({ _id: order.book_id });
                 if (!book) {
                     return res.status(404).json({ message: "Book not found." });
                 }
-                console.log(book.book_quantity, "qqqqqqqqqqq")
-                const newQuantity = book.book_quantity + book_count;
-                await bookModel.findByIdAndUpdate(order.book_id, { $inc: { book_quantity: newQuantity } });
+                const count = parseInt(book_count);
+                const bookcount = parseInt(book.book_quantity);
+            console.log(typeof(bookcount),"qukefgwuiefgiewufgef")
+                // console.log(book.book_quantity,count, "qqqqqqqqqqq")
+                const newQuantity = bookcount + count;
+                console.log(newQuantity,"wefgiweugfuiwefguiwgwueg")
+                await bookModel.findByIdAndUpdate(order.book_id, { $set: { book_quantity: newQuantity } });
 
-            }
+            
 
             res.status(200).json({ message: "book returned successfully.", updatedOrder });
         } catch (error) {
@@ -117,12 +124,12 @@ class orderContoller {
     updateFine = async (req, res, next) => {
         try {
             const { orderId } = req.params;
-            const fineAmt = await orderModel.findByIdAndUpdate({ _id: orderId })
-            if (!fineAmt.fine_amount == " ") {
-                res.status(200).jsonm({ message: "there is no fine amount " })
-            }
+            const fineAmt = await orderModel.findByIdAndUpdate({ _id: orderId },{$set:{fine_amount:" "}})
+                console.log(fineAmt,"finee")
+          
             res.status(200).json({ message: "fine amount cleared", fineAmt })
         } catch (error) {
+            return next(new CustomError(error.message, 500));
 
         }
     }

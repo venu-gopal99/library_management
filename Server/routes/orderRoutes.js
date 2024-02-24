@@ -8,5 +8,5 @@ router.route("/order-create").post(authenticateUser,createOrder);
 router.route("/one-order").get(authenticateUser,getOrderOne);
 router.route("/get-all").get(authenticateUser,restrict("librarian"),getAll);
 router.route("/update-order/:orderId").patch(authenticateUser,updateOrder);
-router.route("/update-fine").patch(authenticateUser,restrict("librarian"),updateFine)
+router.route("/update-fine/:orderId").patch(authenticateUser,updateFine)
 module.exports=router;
