@@ -8,9 +8,9 @@ class orderContoller {
     createOrder = async (req, res, next) => {
         const { id } = req.user;
         const {book_id, book_count } = req.body; // Assuming bookOrders is an array of { book_id, book_count }
-            //  console.log(book_id,book_count,"qqqqqqqqqqqqqqqqqq")
+             console.log(book_id,book_count,"qqqqqqqqqqqqqqqqqq")
         try {
-
+            
             const previousOne = await orderModel.findOne({ student_id: id });
             console.log(previousOne,"hello")
             if (previousOne) {
