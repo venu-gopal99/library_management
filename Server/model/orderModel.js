@@ -7,10 +7,10 @@ const orderSchema = new mongoose.Schema({
         ref: "Tbl_student",
     },
 
-    book_id: [{
+    book_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Tbl_book",
-    }],
+    },
 
     booked_date: {
         type: Date,
@@ -24,6 +24,7 @@ const orderSchema = new mongoose.Schema({
     },
     returned_date: {
         type: Date,
+        
     },
     fine_amount: {
         type: Number,

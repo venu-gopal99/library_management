@@ -65,10 +65,7 @@ class studentController{
     const allStudent = await studentModel.find()
     res.status(200).json({allStudent})
    }
-   getAllStudent = async(req,res,next)=>{
-    const allStudent = await studentModel.find()
-    res.status(200).json({allStudent})
-   }
+ 
 }
 
 module.exports= studentController;

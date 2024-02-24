@@ -23,13 +23,13 @@ const bookSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-   images:[
+   images:
     {
-      type: [String],
+      type:String,
       required: true
     },
     
-  ],
+  
   book_row:{
    type:Number,
    unique:true,

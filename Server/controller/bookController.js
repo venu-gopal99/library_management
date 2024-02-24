@@ -6,6 +6,7 @@ class BookController {
         try {
             const { _id } = req.user;
             const files = req?.files;
+           
             let newRow = 1;
             let newColumn = 1;
 
@@ -31,7 +32,7 @@ class BookController {
                 book_row: newRow,
                 book_column: newColumn,
                 ...req.body
-            });
+            });  
 
             res.status(201).json({ newBook });
         } catch (error) {
