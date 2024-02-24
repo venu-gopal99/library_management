@@ -2,12 +2,12 @@ const jwt = require("jsonwebtoken");
 const util = require("util");
 const studentModel = require("../model/studentModel");
 const CustomError = require("../utils/customError");
-
+const adminModel = require("../model/adminModel")
 
 const authenticateUser = async(req,res,next)=>{
     const testToken = req.headers.authorization;
     let token;
-
+    const secretKey = process.env.SECRET_STRING || 'fallback-secret';
     if(testToken&&testToken.startsWith("Bearer")){
         token = testToken.split(" ")[1];
     }
@@ -18,12 +18,16 @@ const authenticateUser = async(req,res,next)=>{
     }
     const decodedToken = await util.promisify(jwt.verify)(
         token,
-        process.env.SECERT_STRING
+        secretKey
       );
-
+      // console.log(decodedToken.adminTokenObject,"token")
       let user;
-
-      user = await studentModel.findById(decodedToken.id);
+       if(decodedToken.adminTokenObject){
+          user = await adminModel.findById(decodedToken.adminTokenObject.id)
+       }else{
+        user = await studentModel.findById(decodedToken.id);
+       }
+      
 
     if(!user){
         const error = new CustomError(

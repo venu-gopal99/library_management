@@ -14,7 +14,7 @@ class studentController{
             return next(new CustomError("student ID is already exists",409))
            };
            let user = await studentModel.create(req.body);
-
+        
            user ={
             _id:user._id,
             name:user.student_name,
