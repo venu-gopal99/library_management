@@ -17,6 +17,8 @@ app.use("/student",studentRoute)
 app.use("/admin",adminRoute)
 app.use("/book",bookRoute)
 app.use("/order",orderRoute)
+
+require("./routes/uploadRouter")(app)
 dbConnet();
 
 

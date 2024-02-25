@@ -4,30 +4,27 @@ const mongoose = require("mongoose")
 const bookSchema = new mongoose.Schema({
     book_name:{
         type:String,
-        required:true,
+        // required:true,
     },
     book_author:{
         type:String,
-        required:true,
+        // required:true,
     },
    
     book_quantity:{
         type:String,
-        required:true,
+        // required:true,
     },
     ISBN:{
       type:String,
-      required:true,
+      // required:true,
     },
     book_genre:{
         type:String,
-        required:true,
+        // required:true,
     },
-   images:
-    {
-      type:String,
-      required: true
-    },
+    images: [{type:String}],
+   
     
   
   book_row:{
@@ -38,14 +35,15 @@ const bookSchema = new mongoose.Schema({
   },
   book_column:{
     type:Number,
-    unique:true,
-    enum:[1,2,3,4,5],
+    // unique:true,
+    // enum:[1,2,3,4,5],
     default:1,
   },
-  adminId:{
+  adminId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Tbl_admin",
-  },
+    ref: "tbl_admin",
+},
+
   is_deleted: {
     type: Boolean,
     default: false
