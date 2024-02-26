@@ -31,6 +31,9 @@ class adminController {
   adminLogin = async (req, res, next) => {
     try {
       const { admin_mail, admin_password } = req.body;
+      const _id = req.user;
+
+      // console.log(_id,"efuicvqyuvdyu")
       if (!admin_mail && !admin_password) {
         const error = new CustomError("please provide  email & password for login", 400)
         return next(error);

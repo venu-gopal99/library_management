@@ -39,25 +39,47 @@ class BookController {
   //         res.status(500).json({ message: "Internal server error" });
   //     }
   // };
-
   createBook = async (req, res) => {
     try {
-      const { _id } = req.user;
-      if (!_id) {
-        return res.status(401).json({ error: "Unauthorized" });
-      }
-      const files = req?.files;
-      const combinedBook = Object.assign({}, req.body, { adminId: _id });
-      combinedBook.images = files.map((file) => `${file.filename}`);
+        const { _id } = req.user;
+        if (!_id) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+        const files = req?.files;
+        const combinedBook = Object.assign({}, req.body, { adminId: _id });
+        combinedBook.images = files.map((file) => `${file.filename}`);
 
-      const newBook = await bookModel.create(combinedBook);
+        // Get the total number of books currently stored
+        const totalBooks = await bookModel.countDocuments();
 
-      res.status(201).json({ newBook });
+        // Calculate the position of the new book in the grid
+        const row = Math.floor(totalBooks / 5) + 1; // Assuming 5 books per row
+        const column = (totalBooks % 5) + 1;
+
+        // Add position data to the book object
+        combinedBook.position = { row, column };
+
+        const newBook = await bookModel.create(combinedBook);
+
+        res.status(201).json({ newBook });
     } catch (error) {
-      console.error("Error creating book:", error);
-      res.status(500).json({ error: "Internal server error" });
+        console.error("Error creating book:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
-  };
+};
+
+getOne = async (req,res)=>{
+  try {
+    const id = req.params.id;
+    const bookOne = await bookModel.findById({_id:id})
+    res.status(200).json({ bookOne });
+}
+   catch (error) {
+    next(new CustomError(error.message, 500));
+    
+  }
+    
+}
 
   getAllBooks = async (req, res) => {
     try {
@@ -86,9 +108,9 @@ class BookController {
 
   updateBook = async (req, res) => {
     try {
-      const _id = req.params.id;
-      const data = req.body;
-      const updateOne = await bookModel.findByIdAndUpdate(_id, data, {
+      const id = req.params.id;
+    
+      const updateOne = await bookModel.findByIdAndUpdate({_id:id}, req.body, {
         new: true,
       });
       if (!updateOne) {

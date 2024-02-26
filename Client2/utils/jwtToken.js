@@ -1,13 +1,14 @@
-const getTokenFromLoacalStorage = localStorage.getItem("user-token")
+const getTokenFromLocalStorage = localStorage.getItem("user-token")
     ? localStorage.getItem("user-token")
     : null;
-    console.log(getTokenFromLoacalStorage , "venugopal")
 export const config = {
     headers: {
-        Authorization: getTokenFromLoacalStorage
+        Authorization: getTokenFromLocalStorage
             ? `Bearer ${getTokenFromLoacalStorage}`
             : null,
         Accept: "application/json",
         'Content-Type': 'application/json'
     },
+
 };
+

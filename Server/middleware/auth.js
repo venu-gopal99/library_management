@@ -11,7 +11,7 @@ const authenticateUser = async(req,res,next)=>{
     if(testToken&&testToken.startsWith("Bearer")){
         token = testToken.split(" ")[1];
     }
-
+     console.log(token,"token")
     if(!token){
         const error = new CustomError("you are not logged in", 401);
      return next(error)
@@ -24,6 +24,7 @@ const authenticateUser = async(req,res,next)=>{
       let user;
        if(decodedToken.adminTokenObject){
           user = await adminModel.findById(decodedToken.adminTokenObject.id)
+          console.log(decodedToken.adminTokenObject.id,"admin")
        }else{
         user = await studentModel.findById(decodedToken.id);
        }

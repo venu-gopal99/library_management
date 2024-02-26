@@ -1,0 +1,407 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+    
+}
+
+body.dark-mode {
+  background-color: #1a1a1a;
+  transition: all 0.5s;
+}
+
+
+.dashboard-header {
+  display: flex;
+  height: 72px;
+  align-items: center;
+  width: 100% !important;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 1000;
+  background-color: #ae0000;
+  border-bottom: 1px solid lightgrey;
+}
+
+.card-header {
+  background-color: #ae0000 !important;
+  color: white !important;
+  text-align: center;
+}
+
+.dash-logo {
+  width: 20%;
+}
+
+.dash-logo .logo img {
+  height: 50px;
+  width: 55px;
+}
+
+.dash-search {
+  width: 50%;
+}
+
+
+.dash-logo .logo img {
+  padding: 13px;
+  padding-left: 25px;
+}
+
+
+.searchBar {
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#searchQueryInput {
+  width: 100%;
+  height: 2.6rem;
+  border: 1px solid lightgrey !important;
+  outline: none;
+  font-weight: 500;
+  border: none;
+  border-radius: 1.625rem;
+  padding: 0 3.5rem 0 1.5rem;
+  font-size: 1rem;
+}
+
+#searchQuerySubmit {
+  width: 3.5rem;
+  height: 2.8rem;
+  margin-left: -3.5rem;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+
+#searchQuerySubmit:hover {
+  cursor: pointer;
+}
+
+.dash-menu {
+  display: flex;
+  width: 20%;
+  cursor: pointer;
+  justify-content: space-evenly;
+  align-items: center;
+  color: white;
+}
+
+.admin-profile img {
+  border-radius: 50%;
+  width: 40px;
+}
+
+.dash-menu span {
+  font-size: x-large
+}
+
+.dark-mode span {
+  background-color: #fff3e2;
+  padding: 4px 8px;
+  color: #e5780b;
+  cursor: pointer;
+  border-radius: 50%
+}
+
+.dark-mode span {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dash-menu .menu span {
+  display: none;
+}
+
+
+.dark-mode span:hover {
+  background-color: #e5780b;
+  color: #ffffff;
+}
+
+.menu-bar span {
+  display: none;
+}
+
+.logout button {
+  border: none;
+  padding: 10px;
+  background-color: #ffffff;
+  transition: 0.5s;
+  display: none;
+  position: absolute;
+  right: 5%;
+  top: 10%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.logout.active button {
+  display: block;
+}
+
+
+.nav-collapse .show {
+    transition: all 0.5s;
+    position: relative;
+    opacity: 0;
+    top: 0;
+    height: 0px;
+    overflow: hidden;
+    width: 200px;
+    left: 25px;
+  }
+  
+  
+  .sidebar-dash {
+    background: #f5f5f5;
+    backdrop-filter: blur(15px);
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    margin-top: 72px;
+    z-index: 1000;
+    top: 0;
+    overflow-y: auto;
+    transition: 0.6s ease;
+    transition-property: left;
+  }
+  
+  .sidebar-dash::-webkit-scrollbar {
+    width: 0px;
+  }
+  
+  .sidebar-dash.active {
+    left: 0;
+  }
+  
+  
+  .sidebar-dash .menu {
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  .sidebar-dash .menu .item {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .sidebar-dash .menu .item a {
+    color: #6c6c6c;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    display: block;
+    padding: 5px 30px;
+    line-height: 40px;
+  }
+  
+  .sidebar-dash .menu .item a:hover,
+  .sidebar-dash .menu .item a.active {
+    background: #AE0000;
+    color: white;
+    transition: 0.3s ease;
+  }
+  
+  .sidebar-dash .menu .item i {
+    margin-right: 15px;
+  }
+  
+  .sidebar-dash .menu .item a .dropdown {
+    position: absolute;
+    right: 0;
+    margin: 20px;
+    transition: 0.3s ease;
+  }
+  
+  .sidebar-dash .menu .item .sub-menu {
+    background: #f5f5f5;
+    display: none;
+  }
+  
+  .sidebar-dash .menu .item .sub-menu a {
+    padding-left: 80px;
+  }
+  
+  .rotate {
+    transform: rotate(90deg);
+  }
+  
+  .close-btn {
+    position: absolute;
+    color: #fff;
+    font-size: 23px;
+    right: 0px;
+    margin: 15px;
+    cursor: pointer;
+  }
+  
+  .menu-btn {
+    position: absolute;
+    color: rgb(0, 0, 0);
+    font-size: 35px;
+    margin: 25px;
+    cursor: pointer;
+  }
+  
+  .main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  .main h1 {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 60px;
+    text-align: center;
+    line-height: 80px;
+  }
+  
+  .header_path{
+    position:sticky;
+  }
+  /* .right-content {
+    display: flex;
+    transition: all 0.5s;
+    margin-left: 20%;
+    width: 78%;
+  
+    top: 37px;
+    position: relative;
+  } */
+  .right-content{
+    width:calc(100% - 19%) !important;
+    margin-left: 19%;
+   padding-top: 100px;
+   overflow: hidden;
+   
+  }
+  
+  .admin-add-button input {
+    width: 100px;
+  }
+  
+  .card-product label {
+    font-weight: 600;
+  }
+
+  .dashboard {
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+  }
+  
+  .form-container {
+    width: 350px;
+    height: 350px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 20px 30px;
+  }
+  
+  .title {
+    text-align: center;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    margin: 10px 0 30px 0;
+    font-size: 28px;
+    font-weight: 800;
+  }
+  
+  .sub-title {
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 9px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  }
+  
+  .form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .input {
+    border-radius: 20px;
+    border: 1px solid #c0c0c0;
+    outline: 0 !important;
+    box-sizing: border-box;
+    padding: 12px 15px;
+  }
+  
+  .form-btn {
+    padding: 10px 15px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    border-radius: 20px;
+    border: 0 !important;
+    outline: 0 !important;
+    background: teal;
+    color: white;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  
+  .form-btn:active {
+    box-shadow: none;
+  }
+  
+  .sign-up-label {
+    margin: 0;
+    font-size: 10px;
+    color: #747474;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  }
+  
+  .sign-up-link {
+    margin-left: 1px;
+    font-size: 11px;
+    text-decoration: underline;
+    text-decoration-color: teal;
+    color: teal;
+    cursor: pointer;
+    font-weight: 800;
+  }
+  
+  .buttons-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 20px;
+    gap: 15px;
+  }
+  
+  .icon-shape {
+    padding: 6px 10px
+  }
+  .right-content {
+   width: 100%;
+  }
+  .card-product label {
+    font-weight: 600;
+  }
+  .card-header {
+    background-color: #ae0000 !important;
+    color: white !important;
+    text-align: center;
+  }
+  .form-control {
+    width: 95% !important;
+    justify-content: center;
+    border-radius: 3px !important;
+  
+  }
+  .form-control.error-box {
+  border: 1px solid #FF0000;
+}
