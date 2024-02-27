@@ -7,12 +7,14 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import { useFormik } from "formik";
 import $ from "jquery";
+// import { config } from '../utils/jwtToken';
 
 export const AddProduct = () => {
     
-    const token = localStorage.getItem("admin-auth");
+    const token = localStorage.getItem("user");
      const navigate = useNavigate();
-    const { id } = useParams;
+    const { id } = useParams();
+    // console.log(id,"id")
     const [editProduct, setEditProduct] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -23,21 +25,7 @@ export const AddProduct = () => {
         setSelectedFile(file);
     };
 
-   useEffect(()=>{
-    const fetch = async ()=>{
-        try {
-            const response = await axios.get(
-                `http://localhost:5000/book/bookone/${id}`
-            );
-            const result = response.data.book[0];
-            setEditProduct(result);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    fetch();
-   },[id]);
-
+ 
     const {
         values,
         errors,
@@ -68,17 +56,20 @@ export const AddProduct = () => {
             formData.append("images", selectedFile[0]);
             Object.entries(values).forEach(([key, value]) => {
                 formData.append(key, value);
+
             });
             if (!id) {
                 try {
                     const response = await axios.post(
-                        `http://localhost:5000/book/createbook`,
+                        `http://localhost:8000/book/createbook`,
                         formData,
+                       
+                    
                         {
                             headers: {
                                 "Content-type": "multipart/form-data",
                                 Authorization: `Bearer ${token}`,
-                                Accept: "application/json",
+                                // Accept: "application/json",
                             },
                         }
                     );
@@ -87,20 +78,22 @@ export const AddProduct = () => {
                         title: "Success",
                         text: "Book added successfully",
                     });
-                    navigate("/admin/allproducts");
+                    // navigate("/admin/allproducts");
+                    console.log(formData)
                 } catch (error) {
                     console.log(error);
                 }
             } else {
                 try {
-                    const response = await axios.patch(
-                        `http://localhost/5000/book/updatebook/${id}`,
+                    const   response1 = await axios.patch(
+                        `http://localhost:8000/book/updatebook/${id}`,
                         values, // Sending the updated values directly
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
                             },
-                        }
+                        },
+                        // console.log(response1,"usdgiusdg")
                     );
                     Swal.fire({
                         icon: "success",
@@ -112,10 +105,43 @@ export const AddProduct = () => {
                     console.error("Error:", error);
                 }
             }
+
+            // try {
+            //     const response = await axios.post("http://localhost:8000/book/createbook", {...values, images: formData}, config);
+            //     console.log(response.data); // Handle response data
+            // } catch (err) {
+            //     console.error(err); 
+            // }
+            
         },
     });
     
+    useEffect(()=>{
+        const fetch = async ()=>{
 
+            try {
+                const response = await axios.get(
+                    `http://localhost:8000/book/bookone/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                const result = response.data.bookOne;
+                console.log(response.data.bookOne,"aaaaaaaaaaaaaaaaaaaa")
+                setEditProduct(result);
+                
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        if(id){
+            fetch();
+        }
+        
+       },[id]);
+    
 
 
 

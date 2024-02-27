@@ -27,18 +27,7 @@ const bookSchema = new mongoose.Schema({
    
     
   
-  book_row:{
-   type:Number,
-   unique:true,
-   enum:[1,2,3,4,5],
-   default:1,
-  },
-  book_column:{
-    type:Number,
-    // unique:true,
-    // enum:[1,2,3,4,5],
-    default:1,
-  },
+  
   adminId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "tbl_admin",

@@ -1,17 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from "../assests/logo.jpg"
 import adminlogo from "../assests/admin.png"
 import { useNavigate } from 'react-router-dom';
 import {Link } from 'react-router-dom';
 const Header = () => {
+    const token = localStorage.getItem("user");
     
     const [logout, setLogout] = useState(false);
     const navigate = useNavigate();
     const handleclick = () => {
-        setLogout(!logout)
+        setLogout(localStorage.removeItem("user"))
     }
     const [isSidebarActive, setSidebarActive] = useState(false);
-
+   
+    useEffect(()=>{
+    if(!token){
+        navigate("/admin")
+    }
+   },[])
+   
     const toggleSubMenu = (event) => {
         // Find the submenu element
         const subMenu = event.target.nextElementSibling;
@@ -97,7 +104,7 @@ const Header = () => {
 
                 <div className={`logout ${logout ? 'active' : ''}`}>
                     <div className=''>
-                        <button  className=''>Log out</button>
+                        <button  className='mt-2'>Log out</button>
                     </div>
                 </div>
             </header>

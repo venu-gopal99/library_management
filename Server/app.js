@@ -6,6 +6,7 @@ const studentRoute = require("./routes/studentRoutes")
 const adminRoute = require("./routes/adminRoutes")
 const bookRoute = require("./routes/bookRoutes")
 const orderRoute=require("./routes/orderRoutes")
+const dashboard=require("./routes/dashboardRoutes")
 const app = express();
 app.use(express.json());
 app.use(express.static("uploads"))
@@ -17,7 +18,7 @@ app.use("/student",studentRoute)
 app.use("/admin",adminRoute)
 app.use("/book",bookRoute)
 app.use("/order",orderRoute)
-
+app.use("/dashboard",dashboard)
 require("./routes/uploadRouter")(app)
 dbConnet();
 

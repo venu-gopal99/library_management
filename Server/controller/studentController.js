@@ -62,8 +62,19 @@ class studentController{
    };
 
    getAllStudent = async(req,res,next)=>{
-    const allStudent = await studentModel.find()
-    res.status(200).json({allStudent})
+    try {
+        const allStudent = await studentModel.find()
+        if (!allStudent) {
+            return res.status(404).json({
+              status: 404,
+              message: "students not found",
+            });
+          }
+        res.status(200).json({allStudent})
+    } catch (error) {
+        return next(new CustomError(error.message, 500)); 
+    }
+   
    }
  
 }

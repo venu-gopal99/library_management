@@ -9,21 +9,20 @@ const Loginadmin = () => {
         e.preventDefault();
         const email = e.target.elements.email.value;
         const password = e.target.elements.password.value;
-
-        // console.log('url:', process.env.URL);
+  
 
         try {
-            const response = await axios.post(`http://localhost:5000/admin/loginadmin`, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}admin/loginadmin`, {
                 admin_mail: email,
                 admin_password: password,
             });
-           
+
 
 
             if (response.status === 200) {
                 const token = response.data.token;
-                localStorage.setItem('user-token', token);
-                console.log(token,"venu token")
+                localStorage.setItem('user',(token));
+                console.log(token, "venu token")
 
                 navigate('/admin/dashboard');
             }
@@ -50,8 +49,8 @@ const Loginadmin = () => {
             <div className='dashboard'>
                 <div className="form-container">
                     <p className="title">Admin Login</p>
-                    <form className="form" onSubmit={handleSubmit}>
-                        <input type="email" name="email" className="input" placeholder="Email" required />
+                    <form className="form" onSubmit={handleSubmit} >
+                        <input type="email" name="email" className="input" placeholder="Email" required  />
                         <input type="password" name="password" className="input" placeholder="Password" required />
                         <button type='submit' className="form-btn">Submit</button>
                     </form>

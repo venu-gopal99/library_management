@@ -124,6 +124,7 @@ class orderContoller {
     updateFine = async (req, res, next) => {
         try {
             const { orderId } = req.params;
+            console.log(orderId,"wsgvhgsiuvgsuiv")
             const fineAmt = await orderModel.findByIdAndUpdate({ _id: orderId },{$set:{fine_amount:" "}})
                 console.log(fineAmt,"finee")
           

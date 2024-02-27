@@ -10,10 +10,11 @@ router.route("/createbook").post(authenticateUser,restrict("librarian"),uploadPh
 router.route("/getall").get(getAllBooks);
 router
   .route("/updatebook/:id")
-  .patch(authenticateUser, restrict("librarian"), updateBook);
+  .patch(authenticateUser,restrict("librarian"),updateBook);
 router
   .route("/deletebook/:id")
   .delete(authenticateUser, restrict("librarian", deleteBook));
 router
 .route("/bookone/:id").get(authenticateUser,restrict("librarian"),getOne)
+
 module.exports = router;
