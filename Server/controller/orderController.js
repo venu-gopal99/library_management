@@ -56,9 +56,9 @@ class orderContoller {
 
     getOrderOne = async (req, res, next) => {
         try {
-            const _id = req.params.id;
-            const id = req.user;
-            const orderOneUser = await orderModel.findById({ _id, student_id: id })
+            const {id} = req.params;
+            // const id = req.user;
+            const orderOneUser = await orderModel.findById({ student_id: id })
             return res.status(200).json({ orderOneUser })
         } catch (error) {
             return next(new CustomError(error.message, 500));

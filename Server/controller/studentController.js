@@ -31,6 +31,7 @@ class studentController{
    login = async(req,res,next)=>{
     try {
         const {student_ID,student_password} = req.body;
+        console.log(student_ID,student_password,"aiuguigauvi")
         if(!student_ID && !student_password){
             const error=new CustomError("please provide  email & password for login",400)
             return next(error);

@@ -17,6 +17,7 @@ export const AddProduct = () => {
     // console.log(id,"id")
     const [editProduct, setEditProduct] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
+    console.log(selectedFile)
 
     const handleFileChange = (event) => {
         // Get the selected file from the input element
@@ -292,7 +293,7 @@ export const AddProduct = () => {
                                                 {/* File input field for single file selection */}
                                                 <input
                                                     type="file"
-                                                    name="bookImage"
+                                                    name="images"
                                                     className="hidden"
                                                     onChange={handleFileChange} // Handle file selection
                                                 />

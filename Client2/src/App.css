@@ -405,3 +405,7 @@ body.dark-mode {
   .form-control.error-box {
   border: 1px solid #FF0000;
 }
+.listss li{
+  margin-left: 10px !important;
+  padding-left: 10px !important;
+}
