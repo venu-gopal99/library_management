@@ -11,5 +11,5 @@ router.route("/finedetail/:id").get(authenticateUser,fineDetail);
 router.route("/getorder").get(authenticateUser,restrict("librarian"),getOrder);
 router.route("/get-all").get(authenticateUser,restrict("librarian"),getAll);
 router.route("/update-order/:orderId").patch(authenticateUser,updateOrder);
-router.route("/update-fine/:orderId").patch(authenticateUser,restrict("librarian"),updateFine)
+router.route("/update-fine/:orderId").patch(updateFine)
 module.exports=router;

@@ -3,6 +3,8 @@ import Header from "../admin/header";
 import DataTable from "react-data-table-component"
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import DataTable from "react-data-table-component"
 
 const AllOrders = () => {
@@ -40,13 +42,15 @@ const AllOrders = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },)
-
+        },
+        )
+            
       if (res) {
+        toast.success(res.data.message)
         window.location.reload();
       }
     } catch (error) {
-
+      toast.error(error.res.data.message)
     }
   }
   if (!Array.isArray(data)) {
@@ -66,7 +70,7 @@ const AllOrders = () => {
   for (let i = 0; i < searchorder.length; i++) {
     data1.push({
       id: i + 1,
-      student_idstudent_rollno: searchorder[i]?.student_rollno,
+      student_id: searchorder[i]?.student_id,
       book_id: searchorder[i]?.book_id,
       booked_date: searchorder[i]?.booked_date,
       due_date: searchorder[i]?.due_date,
@@ -90,8 +94,8 @@ const AllOrders = () => {
       selector: (row) => row.id,
     },
     {
-      name: "student_rollno",
-      selector: (row) => row.student_rollno,
+      name: "student_id",
+      selector: (row) => row.student_id,
     },
     {
       name: "book_id",

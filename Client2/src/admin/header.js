@@ -11,6 +11,7 @@ const Header = () => {
     const handleclick = () => {
         setLogout(localStorage.removeItem("user"))
         window.location.reload();
+        navigate("/admin")
     }
     const [isSidebarActive, setSidebarActive] = useState(false);
    

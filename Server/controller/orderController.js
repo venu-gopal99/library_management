@@ -14,7 +14,7 @@ class orderContoller {
         try {
 
             const previousOne = await orderModel.find({ student_id: id, status: "not returned" });
-            if ((parseInt(previousOne[0]?.book_count) + parseInt(previousOne[1]?.book_count)) >= 2 || parseInt(previousOne[0]?.book_count) + parseInt(book_count) > 2) {
+            if ((parseInt(previousOne[0]?.book_count) + parseInt(previousOne[1]?.book_count)) >= 2 || (parseInt(previousOne[0]?.book_count) + parseInt(book_count)) > 2 || parseInt(book_count) > 2) {
                 return res.status(400).json({ message: "You can only take two books." });
                 
             } else if (previousOne.length >= 2) {
@@ -163,7 +163,8 @@ class orderContoller {
         try {
             const { orderId } = req.params;
             console.log(orderId,"wsgvhgsiuvgsuiv")
-            const fineAmt = await orderModel.findByIdAndUpdate({ _id: orderId },{$set:{fine_amount:" "}})
+            const fineAmt = await orderModel.findByIdAndUpdate({ _id: orderId },{$set:{fine_amount:"0"}})
+            
                 console.log(fineAmt,"finee")
           
             res.status(200).json({ message: "fine amount cleared", fineAmt })

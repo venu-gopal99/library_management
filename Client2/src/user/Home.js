@@ -53,9 +53,9 @@ export const Home = () => {
     const handleRemoveFromOrder = (bookId) => {
         const updatedOrder = { ...order };
         if (updatedOrder[bookId]) {
-            updatedOrder[bookId].Book_count -= 1; // Decrement quantity if book is in order
+            updatedOrder[bookId].Book_count -= 1; 
             if (updatedOrder[bookId].Book_count <= 0) {
-                delete updatedOrder[bookId]; // Remove book from order if quantity becomes zero
+                delete updatedOrder[bookId]; 
             }
             setOrder(updatedOrder);
             setBookCount(updatedOrder[bookId].Book_count)
