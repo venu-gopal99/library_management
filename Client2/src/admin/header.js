@@ -10,6 +10,7 @@ const Header = () => {
     const navigate = useNavigate();
     const handleclick = () => {
         setLogout(localStorage.removeItem("user"))
+        window.location.reload();
     }
     const [isSidebarActive, setSidebarActive] = useState(false);
    

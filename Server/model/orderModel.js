@@ -11,6 +11,9 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Tbl_book",
     },
+    student_rollno:{
+       type:String,
+    },
 
     booked_date: {
         type: Date,
@@ -28,7 +31,7 @@ const orderSchema = new mongoose.Schema({
     },
     fine_amount: {
         type: Number,
-    
+        default:"0",
     },
     status: {
         type: String,

@@ -66,7 +66,7 @@ const AllOrders = () => {
   for (let i = 0; i < searchorder.length; i++) {
     data1.push({
       id: i + 1,
-      student_id: searchorder[i]?.student_id,
+      student_idstudent_rollno: searchorder[i]?.student_rollno,
       book_id: searchorder[i]?.book_id,
       booked_date: searchorder[i]?.booked_date,
       due_date: searchorder[i]?.due_date,
@@ -90,8 +90,8 @@ const AllOrders = () => {
       selector: (row) => row.id,
     },
     {
-      name: "student_id",
-      selector: (row) => row.student_id,
+      name: "student_rollno",
+      selector: (row) => row.student_rollno,
     },
     {
       name: "book_id",

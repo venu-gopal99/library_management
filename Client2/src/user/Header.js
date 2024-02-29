@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import logo from "../assests/logo.jpg"
+
 
 function Header() {
    const navigate = useNavigate();
@@ -13,13 +15,15 @@ function Header() {
 
     const handleClick = ()=>{
         localStorage.removeItem("user")
+        localStorage.removeItem("user_detail")
+        navigate("/")
     }
     return (
         <div >
             <nav className="navbar navbar-expand-lg navbar-light bg-light ">
                 <a className="navbar-brand" href="#">
                     <a className="navbar-brand" href="#">
-                        <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" className="d-inline-block align-top" alt="" />
+                        <img src={logo} width="30" height="30"  className="d-inline-block align-top mx-2" alt="" />
                         Library
                     </a>
                 </a>
@@ -40,15 +44,13 @@ function Header() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/history">HISTORY</Link>
                         </li>
-                        <li className="nav-item pl-4">
-                            <Link className="nav-link" to="/login">LOGIN</Link>
-                        </li>
+                        
                     </ul>
                 </div>
                 <div>
                     <ul className="navbar-nav listss">
                     <li className="nav-item pl-4">
-                            <p className="nav-link" onClick={handleClick}>LOGOUT</p>
+                            <button className="nav-link" onClick={handleClick}>LOGOUT</button>
                         </li> 
                     </ul>
                     

@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import axios from 'axios';
 import Swal from "sweetalert2";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { json } from 'react-router-dom';
 
 export const Home = () => {
     const token = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem('user_detail'))
+    console.log(user.student_ID,"user")
     console.log(token,"wiuvgdiuvg")
     const [books, setBooks] = useState([]);
 
@@ -78,8 +83,8 @@ export const Home = () => {
             });
             console.log(response, "message");
         } catch (error) {
-            
-            console.error("Error:", error);
+            toast.error(error.response.data.message)
+            console.error("Error:", error.response.data.message );
         }
     };
     
@@ -91,8 +96,9 @@ export const Home = () => {
                 <div className='row'>
                     {books?.map(book => (
                         <div key={book._id} className='col-sm-3'>
-                            <div className='card'>
-                                {/* <img src={`http://localhost:8000/${book.images[0]}`} className='card-img-top ' alt={book.book_name}  /> */}
+                            <div className='card text-center mt-3 '>
+                               
+                               <img src={`http://localhost:8000/${book.images[0]}`} width="60" height="80%"  className='card-img-top ' alt={book.book_name}  />
                                 <div className='card-body'>
                                     <h5 className='card-title'>Book Name: {book.book_name}</h5>
                                     <p className='card-text'>Book Author: {book.book_author}</p>
