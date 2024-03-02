@@ -4,16 +4,16 @@ import logo from "../assests/logo.jpg"
 
 
 function Header() {
-   const navigate = useNavigate();
-   const token = localStorage.getItem('user');
+    const navigate = useNavigate();
+    const token = localStorage.getItem('user');
 
-    useEffect(()=>{
-        if(!token){
-         navigate("/")
+    useEffect(() => {
+        if (!token) {
+            navigate("/")
         }
     })
 
-    const handleClick = ()=>{
+    const handleClick = () => {
         localStorage.removeItem("user")
         localStorage.removeItem("user_detail")
         navigate("/")
@@ -21,12 +21,12 @@ function Header() {
     return (
         <div >
             <nav className="navbar navbar-expand-lg navbar-light bg-light ">
-                <a className="navbar-brand" href="#">
-                    <a className="navbar-brand" href="#">
-                        <img src={logo} width="30" height="30"  className="d-inline-block align-top mx-2" alt="" />
+                <Link className="navbar-brand" to="/home">
+                    <Link className="navbar-brand" to="/home">
+                        <img src={logo} width="30" height="30" className="d-inline-block align-top mx-2" alt="" />
                         Library
-                    </a>
-                </a>
+                    </Link>
+                </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -44,16 +44,16 @@ function Header() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/history">HISTORY</Link>
                         </li>
-                        
+
                     </ul>
                 </div>
                 <div>
                     <ul className="navbar-nav listss">
-                    <li className="nav-item pl-4">
+                        <li className="nav-item pl-4">
                             <button className="nav-link" onClick={handleClick}>LOGOUT</button>
-                        </li> 
+                        </li>
                     </ul>
-                    
+
                 </div>
             </nav>
         </div>

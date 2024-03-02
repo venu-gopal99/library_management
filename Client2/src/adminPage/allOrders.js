@@ -5,11 +5,10 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import DataTable from "react-data-table-component"
+
 
 const AllOrders = () => {
-  // const {orderId} = useParams();
-  // console.log(orderId,"order")
+
   const token = localStorage.getItem("user");
 
   const [search, setSearch] = useState("");
@@ -143,7 +142,7 @@ const AllOrders = () => {
               <div className="col-lg-4">
                 <form class="d-flex">
                   <div className="input-group w-75">
-                    {/* <span className="input-group-text"><IoIosSearch /></span> */}
+ 
                     <input
                       className="form-control me-2"
                       type="search"
