@@ -20,7 +20,7 @@ const authenticateUser = async(req,res,next)=>{
         token,
         secretKey
       );
-      console.log(token,"token")
+      // console.log(token,"token")
       let user;
        if(decodedToken.adminTokenObject){
           user = await adminModel.findById(decodedToken.adminTokenObject.id)
@@ -29,7 +29,7 @@ const authenticateUser = async(req,res,next)=>{
         user = await studentModel.findById(decodedToken.id);
        }
       
-
+      //  console.log(user,"user")
     if(!user){
         const error = new CustomError(
             "The user with given token does not exist",
@@ -38,7 +38,7 @@ const authenticateUser = async(req,res,next)=>{
           return next(error);
     }
 
-
+    // req.student = user.student_ID
     req.user = user;
     next();
 };

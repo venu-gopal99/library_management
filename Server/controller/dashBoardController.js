@@ -1,6 +1,7 @@
 const CustomError = require("../utils/customError");
 const studentModel = require("../model/studentModel");
-const orderModel = require("../model/orderModel")
+const orderModel = require("../model/orderModel");
+const bookModel = require("../model/bookModel");
 
 
 class dashBoardController{
@@ -8,8 +9,8 @@ class dashBoardController{
         try {
             const studentcount = await studentModel.countDocuments();
         const orderCount = await orderModel.countDocuments();
-
-        res.status(200).json({message:"count is updated",studentcount,orderCount})
+        const bookscount = await bookModel.countDocuments();
+        res.status(200).json({message:"count is updated",studentcount,orderCount,bookscount})
         } catch (error) {
             return next(new CustomError(error.message, 400));
         }

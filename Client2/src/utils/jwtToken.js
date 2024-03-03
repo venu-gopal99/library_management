@@ -15,4 +15,3 @@ export const config = {
 
 };
 
- console.log(getTokenFromLocalStorage,"token")

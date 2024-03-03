@@ -10,23 +10,20 @@ import $ from "jquery";
 // import { config } from '../utils/jwtToken';
 
 export const AddProduct = () => {
-    
+
     const token = localStorage.getItem("user");
-     const navigate = useNavigate();
+    const navigate = useNavigate();
     const { id } = useParams();
     // console.log(id,"id")
     const [editProduct, setEditProduct] = useState("");
-    const [selectedFile, setSelectedFile] = useState(null);
-    console.log(selectedFile)
+    const [fileState, setFileState] = useState(null)
+  
 
-    const handleFileChange = (event) => {
-        // Get the selected file from the input element
-        const file = event.target.files[0];
-        // Update the selectedFile state with the new file
-        setSelectedFile(file);
-    };
+    const handleFileChange=(e)=>{
+        setFileState(e.target.files[0])
+     
+    }
 
- 
     const {
         values,
         errors,
@@ -36,7 +33,7 @@ export const AddProduct = () => {
         handleSubmit,
         resetForm
 
-    } =useFormik({
+    } = useFormik({
         enableReinitialize: true,
         initialValues: {
             book_name: "" || editProduct.book_name,
@@ -53,19 +50,17 @@ export const AddProduct = () => {
             book_genre: Yup.string().required("Book Genre is required"),
         }),
         onSubmit: async (values) => {
-            const formData = new FormData();
-            formData.append("images", selectedFile[0]);
-            Object.entries(values).forEach(([key, value]) => {
-                formData.append(key, value);
-
-            });
+            
+            
+             const data={...values,images:fileState}
+             console.log(data)
             if (!id) {
                 try {
                     const response = await axios.post(
-                        `http://localhost:8000/book/createbook`,
-                        formData,
-                       
-                    
+                        `http://localhost:8000/book/createbook`,data,
+
+
+
                         {
                             headers: {
                                 "Content-type": "multipart/form-data",
@@ -74,19 +69,21 @@ export const AddProduct = () => {
                             },
                         }
                     );
+                    resetForm();
                     Swal.fire({
                         icon: "success",
                         title: "Success",
                         text: "Book added successfully",
                     });
+                    
                     // navigate("/admin/allproducts");
-                    console.log(formData)
+
                 } catch (error) {
                     console.log(error);
                 }
             } else {
                 try {
-                    const   response1 = await axios.patch(
+                    const response1 = await axios.patch(
                         `http://localhost:8000/book/updatebook/${id}`,
                         values, // Sending the updated values directly
                         {
@@ -101,6 +98,7 @@ export const AddProduct = () => {
                         title: "Success",
                         text: "Book Updated Successfully!",
                     });
+                    
                     navigate("/admin/allproducts");
                 } catch (error) {
                     console.error("Error:", error);
@@ -113,12 +111,12 @@ export const AddProduct = () => {
             // } catch (err) {
             //     console.error(err); 
             // }
-            
+
         },
     });
-    
-    useEffect(()=>{
-        const fetch = async ()=>{
+
+    useEffect(() => {
+        const fetch = async () => {
 
             try {
                 const response = await axios.get(
@@ -130,19 +128,19 @@ export const AddProduct = () => {
                     }
                 );
                 const result = response.data.bookOne;
-                console.log(response.data.bookOne,"aaaaaaaaaaaaaaaaaaaa")
+                console.log(response.data.bookOne, "aaaaaaaaaaaaaaaaaaaa")
                 setEditProduct(result);
-                
+
             } catch (error) {
                 console.log(error);
             }
         };
-        if(id){
+        if (id) {
             fetch();
         }
-        
-       },[id]);
-    
+
+    }, [id]);
+
 
 
 
@@ -297,8 +295,8 @@ export const AddProduct = () => {
                                                     className="hidden"
                                                     onChange={handleFileChange} // Handle file selection
                                                 />
-                                               
-                                            
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -307,7 +305,7 @@ export const AddProduct = () => {
                                 <div className="text-center">
                                     <button
                                         style={{ backgroundColor: "#ae0000", color: "white" }}
-                                        type="submit" 
+                                        type="submit"
                                         className="btn mt-3"
                                     >
                                         {id ? "Update Product" : "Add Product"}

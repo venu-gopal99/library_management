@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import "./user.css"
-import { FaRegEyeSlash } from "react-icons/fa";
-import { IoEyeOutline } from "react-icons/io5";
+
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import axios from "axios";
@@ -10,11 +9,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 function Register() {
     const navigate = useNavigate();
-    const [show, setShow] = useState(true);
-    const handleShow = () => {
-        setShow(!show);
-    };
-
+  
     const {
         values,
         errors,
@@ -192,7 +187,7 @@ function Register() {
 
                             <div className="form-group">
                                 <label for="password_field">Password</label>
-                                <input type={show ? "password" : "text"}
+                                <input type='password'
                                     name="student_password"
                                     onChange={handleChange}
                                     className={`form-control  ${errors.student_password && touched.student_password
@@ -200,11 +195,8 @@ function Register() {
                                         : ""
                                         }`}
                                     value={values.student_password} />
-{/* 
-                                <label className="fs-4" onClick={handleShow}>
-                                    {show ? <FaRegEyeSlash /> : <IoEyeOutline />}
-                                </label> */}
 
+                               
 
 
                                 {errors.student_password && touched.student_password ? (

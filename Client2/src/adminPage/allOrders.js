@@ -3,11 +3,12 @@ import Header from "../admin/header";
 import DataTable from "react-data-table-component"
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-// import DataTable from "react-data-table-component"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const AllOrders = () => {
-  // const {orderId} = useParams();
-  // console.log(orderId,"order")
+
   const token = localStorage.getItem("user");
 
   const [search, setSearch] = useState("");
@@ -40,13 +41,15 @@ const AllOrders = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },)
-
+        },
+        )
+            
       if (res) {
+        toast.success(res.data.message)
         window.location.reload();
       }
     } catch (error) {
-
+      toast.error(error.res.data.message)
     }
   }
   if (!Array.isArray(data)) {
@@ -139,7 +142,7 @@ const AllOrders = () => {
               <div className="col-lg-4">
                 <form class="d-flex">
                   <div className="input-group w-75">
-                    {/* <span className="input-group-text"><IoIosSearch /></span> */}
+ 
                     <input
                       className="form-control me-2"
                       type="search"

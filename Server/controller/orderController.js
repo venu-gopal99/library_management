@@ -1,18 +1,20 @@
 const orderModel = require("../model/orderModel");
 const bookModel = require("../model/bookModel");
 const CustomError = require("../utils/customError");
+const studentModel = require("../model/studentModel");
 
 
 class orderContoller {
 
     createOrder = async (req, res, next) => {
         const { id } = req.user;
+        console.log(id,"id")
         const { book_id, book_count } = req.body;
         console.log(book_id, "hello");
         try {
 
             const previousOne = await orderModel.find({ student_id: id, status: "not returned" });
-            if ((parseInt(previousOne[0]?.book_count) + parseInt(previousOne[1]?.book_count)) >= 2 || parseInt(previousOne[0]?.book_count) + parseInt(book_count) > 2) {
+            if ((parseInt(previousOne[0]?.book_count) + parseInt(previousOne[1]?.book_count)) >= 2 || (parseInt(previousOne[0]?.book_count) + parseInt(book_count)) > 2 || parseInt(book_count) > 2) {
                 return res.status(400).json({ message: "You can only take two books." });
                 
             } else if (previousOne.length >= 2) {
@@ -21,7 +23,7 @@ class orderContoller {
 
             const count = await orderModel.findOne({ student_id: id })
             console.log(count, "sadfgwsegweg")
-
+            
             const uniqueBookIds = new Set(book_id);
             const calculatedBookCount = uniqueBookIds.size === 1 ? 2 : 1;
 
@@ -36,10 +38,13 @@ class orderContoller {
             if (!book) {
                 return res.status(404).json({ message: "Book not found." });
             }
-
+            const rollno = await studentModel.findById({_id:id}) 
+             console.log(rollno.student_ID,"student roll no")
+             const std_roll = rollno.student_ID
             const order = await orderModel.create({
                 student_id: id,
                 book_id: book_id,
+                student_rollno:std_roll,
                 booked_date: new Date(),
                 book_count: finalBookCount,
             }); console.log(order, "order")
@@ -58,13 +63,48 @@ class orderContoller {
         try {
             const {id} = req.params;
             // const id = req.user;
-            const orderOneUser = await orderModel.findById({ student_id: id })
+            const orderOneUser = await orderModel.find({ student_rollno: id , status:"not returned" })
             return res.status(200).json({ orderOneUser })
         } catch (error) {
             return next(new CustomError(error.message, 500));
 
         }
     };
+    orderHistory = async (req, res, next) => {
+        try {
+            const {id} = req.params;
+            // const id = req.user;
+            const orderOneUser = await orderModel.find({ student_rollno: id })
+            return res.status(200).json({ orderOneUser })
+        } catch (error) {
+            return next(new CustomError(error.message, 500));
+
+        }
+    };
+    fineDetail = async (req, res, next) => {
+        try {
+            const { id } = req.params;
+            const orderOneUser = await orderModel.find({ student_rollno: id, fine_amount: { $ne: 0 } }); // Query modified to check fine_amount not equal to zero
+            return res.status(200).json({ orderOneUser });
+        } catch (error) {
+            return next(new CustomError(error.message, 500));
+        }
+    };
+    
+    getOrder = async (req, res, next) => {
+        try {
+          
+            // const id = req.user;
+            const orderOneUser = await orderModel.find({  status:"not returned" })
+            return res.status(200).json({ orderOneUser })
+        } catch (error) {
+            return next(new CustomError(error.message, 500));
+
+        }
+    };
+
+
+
     getAll = async (req, res, next) => {
         try {
             const allorder = await orderModel.find()
@@ -77,14 +117,12 @@ class orderContoller {
         try {
             const { orderId } = req.params;
             const { returned_date, book_count } = req.body;
-            // console.log(returned_date,book_count,orderId,"hiiiiii")
-            // Find the order by its ID
+           console.log(typeof(book_count,"hguiyfuyfy"))
             const order = await orderModel.findById({ _id: orderId });
             if (!order) {
                 return res.status(404).json({ message: "Order not found." });
             }
-            //  console.log(order.book_count,"wvwdvwvwdvwvdsdv")
-            // Update the order data
+ 
             order.returned_date = returned_date;
             order.status = "returned";
             const returndate = new Date(returned_date);
@@ -125,7 +163,8 @@ class orderContoller {
         try {
             const { orderId } = req.params;
             console.log(orderId,"wsgvhgsiuvgsuiv")
-            const fineAmt = await orderModel.findByIdAndUpdate({ _id: orderId },{$set:{fine_amount:" "}})
+            const fineAmt = await orderModel.findByIdAndUpdate({ _id: orderId },{$set:{fine_amount:"0"}})
+            
                 console.log(fineAmt,"finee")
           
             res.status(200).json({ message: "fine amount cleared", fineAmt })

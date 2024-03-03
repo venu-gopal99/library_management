@@ -8,15 +8,17 @@ import { useFormik } from 'formik'
 import * as Yup from "yup";
 import axios from 'axios'
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 
 function Login() {
     const navigate = useNavigate();
-    const [show, setShow] = useState(true);
-    const handleShow = () => {
-        setShow(!show);
-    };
+    // const [show, setShow] = useState(true);
+    // const handleShow = () => {
+    //     setShow(!show);
+    // };
     const { values, errors, handleChange, handleBlur, handleSubmit, touched } =
         useFormik({
             initialValues: {
@@ -39,16 +41,17 @@ function Login() {
                 try {
                     const response = await axios.post(`${process.env.REACT_APP_API_URL}student/loginuser`,
                         values);
-                    console.log(response.data.token, "response")
+                    console.log(values._id, "response")
                     if (response.status == 200) {
                         const token = response.data.token;
-                     localStorage.setItem('user', JSON.stringify(values));
-                        console.log(token,"sdvsdiuvgsdviu")
+                     localStorage.setItem('user_detail', JSON.stringify(values));
+                     localStorage.setItem('user', (token));
+                    
                     }
                     Swal.fire({
                         icon: "success",
                         title: "Success",
-                        text: "Logged In successfully",
+                        text: "Logged In Successfully",
                     });
                     const message = response.data.message;
                     toast.success(message)
@@ -93,7 +96,7 @@ function Login() {
 
                             <div className="form-group">
                                 <label for="password_field">Password</label>
-                                <input type={show ? "password" : "text"}
+                                <input type="password"
                                     name="student_password"
                                     onChange={handleChange}
                                     className={`form-control  ${errors.student_password && touched.student_password
@@ -103,7 +106,10 @@ function Login() {
                                     value={values.student_password}
                                     autocomplete="current-password" />
 
-                           
+                                {/* <label className="fs-4" onClick={handleShow}>
+                                    {show ? <FaRegEyeSlash /> : <IoEyeOutline />}
+                                </label> */}
+
 
 
                                 {errors.student_password && touched.student_password ? (
