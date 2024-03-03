@@ -3,7 +3,7 @@ import Header from './Header'
 import "./user.css"
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
-import { Link } from 'react-router-dom'
+import { Link, json } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from "yup";
 import axios from 'axios'
@@ -42,13 +42,13 @@ function Login() {
                     console.log(response.data.token, "response")
                     if (response.status == 200) {
                         const token = response.data.token;
-                     localStorage.setItem('user', (token));
+                     localStorage.setItem('user', JSON.stringify(values));
                         console.log(token,"sdvsdiuvgsdviu")
                     }
                     Swal.fire({
                         icon: "success",
                         title: "Success",
-                        text: "Book added successfully",
+                        text: "Logged In successfully",
                     });
                     const message = response.data.message;
                     toast.success(message)
@@ -103,10 +103,7 @@ function Login() {
                                     value={values.student_password}
                                     autocomplete="current-password" />
 
-                                <label className="fs-4" onClick={handleShow}>
-                                    {show ? <FaRegEyeSlash /> : <IoEyeOutline />}
-                                </label>
-
+                           
 
 
                                 {errors.student_password && touched.student_password ? (

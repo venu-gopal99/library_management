@@ -51,7 +51,7 @@ class studentController{
             }
         user ={
             _id:user._id,
-            name:user.student_name,
+       
             rollno:user.student_ID,
         };
         sendUserToken(user,200,res,{message:"Login successfull"});

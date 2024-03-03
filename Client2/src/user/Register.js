@@ -200,10 +200,10 @@ function Register() {
                                         : ""
                                         }`}
                                     value={values.student_password} />
-
+{/* 
                                 <label className="fs-4" onClick={handleShow}>
                                     {show ? <FaRegEyeSlash /> : <IoEyeOutline />}
-                                </label>
+                                </label> */}
 
 
 
