@@ -65,7 +65,7 @@ export const AddProduct = () => {
                             headers: {
                                 "Content-type": "multipart/form-data",
                                 Authorization: `Bearer ${token}`,
-                                // Accept: "application/json",
+                                Accept: "application/json",
                             },
                         }
                     );

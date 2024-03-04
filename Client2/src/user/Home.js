@@ -76,11 +76,12 @@ export const Home = () => {
                     },
                 }
             );
-            Swal.fire({
-                icon: "success",
-                title: "Success",
-                text: "Book taken successfully",
-            });
+            // Swal.fire({
+            //     icon: "success",
+            //     title: "Success",
+            //     text: "Book taken successfully",
+            // });
+            toast.success(response.data.message)
             console.log(response, "message");
         } catch (error) {
             toast.error(error.response.data.message)
@@ -125,9 +126,9 @@ export const Home = () => {
                                 <img src={`http://localhost:8000/${book.images[0]}`} width="60" height="80%" className='card-img-top ' alt={book.book_name} />
                                 <div className='card-body'>
                                     <h5 className='card-title fs-10'>Book Name: {book.book_name}</h5>
-                                    <p className='card-text'>Book Author: {book.book_author}</p>
-                                    <p className='card-text'>Book Genre: {book.book_genre}</p>
-                                    <p className='card-text'>Book Quantity: {book.book_quantity}</p>
+                                    <p className='card-text'> Author: {book.book_author}</p>
+                                    <p className='card-text'>Genre: {book.book_genre}</p>
+                                    <p className='card-text'>Quantity: {book.book_quantity}</p>
                                     <p>
                                         <button className='btn btn-sm btn-outline-success ' onClick={() => handleRemoveFromOrder(book._id)}>-</button>
                                         {order[book._id] ? order[book._id].Book_count : 0}

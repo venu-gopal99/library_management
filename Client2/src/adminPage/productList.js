@@ -4,8 +4,11 @@ import DataTable from "react-data-table-component"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { IoIosSearch } from "react-icons/io";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const ProductList = () => {
+  const token = localStorage.getItem("user");
+
   const [data, setData] = useState("");
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -30,6 +33,24 @@ export const ProductList = () => {
     const id = row._id;
     navigate(`/admin/addproduct/${id}`)
   };
+
+
+  const handleDelete = async(row)=>{
+    try {
+      const id = row._id;
+      const res = await axios.delete(`http://localhost:8000/book/deletebook/${id}`,row,
+      {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+      );
+      toast.success(res.data.message)
+      console.log(res,"data")
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   if (!Array.isArray(data)) {
     console.error("Data is not an array:", data);
@@ -58,6 +79,9 @@ export const ProductList = () => {
         <>
           <button className='btn btn-sm btn-outline-success ms-1' onClick={()=>handleEdit(searchGst[i]._id)}>
             edit
+          </button>
+          <button className='btn btn-sm btn-outline-success ms-1' onClick={()=>handleDelete(searchGst[i]._id)}>
+            delete
           </button>
         </>
       )
@@ -99,9 +123,14 @@ export const ProductList = () => {
     {
       name: "Action",
       cell: (row) => (
+        <>
         <button className='btn btn-sm btn-outline-success ms-1' onClick={() => handleEdit(row)}>
         <span className="bi bi-pencil"></span>
         </button>
+        <button className='btn btn-sm btn-outline-success ms-1' onClick={() => handleDelete(row)}>
+        <span className="bi bi-trash3"></span>
+        </button>
+        </>
       )
     }
 
