@@ -103,8 +103,9 @@ class BookController {
 
   deleteBook = async (req, res) => {
     try {
-      const _id = req.params.id;
-      const deleteOne = await bookModel.findByIdAndDelete(_id);
+      const {id} = req.params;
+      console.log(id,"sdisdbvgiugui")
+      const deleteOne = await bookModel.findByIdAndDelete({_id:id});
       return res.status(200).json({ deleteOne });
     } catch (error) {
       next(new CustomError(error.message, 500));
@@ -132,6 +133,9 @@ class BookController {
       conso
     }
   };
+
+
+
 }
 
 module.exports = BookController;

@@ -13,7 +13,7 @@ router
   .patch(authenticateUser,restrict("librarian"),updateBook);
 router
   .route("/deletebook/:id")
-  .delete(authenticateUser, restrict("librarian", deleteBook));
+  .delete( deleteBook);
 router
 .route("/bookone/:id").get(authenticateUser,restrict("librarian"),getOne)
 

@@ -8,56 +8,56 @@ class orderContoller {
 
     createOrder = async (req, res, next) => {
         const { id } = req.user;
-        console.log(id,"id")
+        console.log(id, "id");
         const { book_id, book_count } = req.body;
         console.log(book_id, "hello");
         try {
-
             const previousOne = await orderModel.find({ student_id: id, status: "not returned" });
             if ((parseInt(previousOne[0]?.book_count) + parseInt(previousOne[1]?.book_count)) >= 2 || (parseInt(previousOne[0]?.book_count) + parseInt(book_count)) > 2 || parseInt(book_count) > 2) {
                 return res.status(400).json({ message: "You can only take two books." });
-                
             } else if (previousOne.length >= 2) {
                 return res.status(400).json({ message: "Please return the previously taken books before ordering new ones." });
             }
-
-            const count = await orderModel.findOne({ student_id: id })
-            console.log(count, "sadfgwsegweg")
-            
+    
+            const count = await orderModel.findOne({ student_id: id });
+            console.log(count, "sadfgwsegweg");
+    
             const uniqueBookIds = new Set(book_id);
             const calculatedBookCount = uniqueBookIds.size === 1 ? 2 : 1;
-
-
+    
             const finalBookCount = book_count !== undefined ? book_count : calculatedBookCount;
-       
-            if(previousOne.book_count > finalBookCount){
-                return res.status(400).json({message:"please return the previous taken books"})
+    
+            if (previousOne.book_count > finalBookCount) {
+                return res.status(400).json({ message: "Please return the previously taken books." });
             }
-
+    
             const book = await bookModel.findById(book_id);
-            if (!book) {
-                return res.status(404).json({ message: "Book not found." });
+            if (!book || book.book_quantity == 0) {
+                return res.status(404).json({ message: "Book is not available." });
             }
-            const rollno = await studentModel.findById({_id:id}) 
-             console.log(rollno.student_ID,"student roll no")
-             const std_roll = rollno.student_ID
+    
+            const rollno = await studentModel.findById({_id:id});
+            console.log(rollno.student_ID, "student roll no");
+            const std_roll = rollno.student_ID;
+    
             const order = await orderModel.create({
                 student_id: id,
                 book_id: book_id,
-                student_rollno:std_roll,
+                student_rollno: std_roll,
                 booked_date: new Date(),
                 book_count: finalBookCount,
-            }); console.log(order, "order")
+            });
+            console.log(order, "order");
+    
             const newQuantity = book.book_quantity - finalBookCount;
             await bookModel.findByIdAndUpdate(book_id, { book_quantity: newQuantity });
-
-
+    
             res.status(201).json({ order, message: "Orders created successfully." });
         } catch (error) {
             return next(new CustomError(error.message, 500));
-
         }
     };
+    
 
     getOrderOne = async (req, res, next) => {
         try {
