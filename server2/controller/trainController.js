@@ -4,11 +4,11 @@ const { default: mongoose } = require("mongoose");
 class trainController{
     createTrain = async (req, res) => {
         try {
-            const { train_name, train_No, train_departs, train_destination, total_coach, seats_eachcoach, price, shedule_time } = req.body;
+            const { train_name, train_No, train_departs, train_destination, total_coach, seats_eachcoach, price, shedule_time, startStation, endStation, numRoutes } = req.body;
     
             // Validate input data
-            if (!Number.isInteger(total_coach) || !Number.isInteger(seats_eachcoach) || total_coach <= 0 || seats_eachcoach <= 0) {
-                return res.status(400).json({ message: 'Invalid configuration: total_coach and seats_eachcoach must be positive integers.' });
+            if (!Number.isInteger(total_coach) || !Number.isInteger(seats_eachcoach) || total_coach <= 0 || seats_eachcoach <= 0 || numRoutes <= 0) {
+                return res.status(400).json({ message: 'Invalid configuration: total_coach, seats_eachcoach, and numRoutes must be positive integers.' });
             }
     
             // Generate seat numbers
@@ -21,6 +21,14 @@ class trainController{
                 }
             }
     
+            // Generate multiple start-to-end routes
+            const routes = [];
+            for (let i = 0; i < numRoutes; i++) {
+                const start = startStation; // Use the provided start station
+                const end = endStation; // Use the provided end station
+                routes.push({ start, end });
+            }
+    
             // Create new train document
             const newTrain = await trainModel.create({
                 train_name,
@@ -31,6 +39,7 @@ class trainController{
                 seats_eachcoach,
                 price,
                 shedule_time,
+                train_routes: routes,
                 train_seats: seats,
             });
     
@@ -43,6 +52,7 @@ class trainController{
             res.status(500).json({ message: 'Internal server error' });
         }
     };
+    
 
     getAll = async(req,res)=>{
         try {
