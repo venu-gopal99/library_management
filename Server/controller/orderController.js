@@ -107,7 +107,7 @@ class orderContoller {
 
     getAll = async (req, res, next) => {
         try {
-            const allorder = await orderModel.find()
+            const allorder = await orderModel.find({status:"returned"})
             return res.status(200).json({ allorder })
         } catch (error) {
             return next(new CustomError(error.message, 500));
