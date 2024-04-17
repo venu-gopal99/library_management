@@ -33,7 +33,13 @@ const trainSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    train_seats:[{
+    totalSeats:[{
+        type:String
+    }],
+    availableSeats:[{
+        type:String
+    }],
+    bookedSeats:[{
         type:String
     }],
     status:[{
