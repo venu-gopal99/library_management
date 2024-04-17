@@ -97,7 +97,7 @@ export const History = () => {
 
         <div className="col-lg-12 ">
           <div className='d-flex justify-content-between'>
-            <h4>Fine Amount Details</h4>
+            <h4>Book Taken History</h4>
          
           </div>
 
