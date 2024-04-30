@@ -20,7 +20,13 @@ import { Home } from "./user/Home";
 import { Due } from "./user/Due";
 import { Books } from "./user/Books";
 import { History } from "./user/History";
+
+
+import {useGetPokemonByNameQuery,usePostMethodMutation} from "../src/Rtk/Rtkquery"
 function App() {
+  const {data}=useGetPokemonByNameQuery("pokemonApi")
+  console.log(data)
+  
   return (
     <div>
       <ToastContainer />
